@@ -2,6 +2,7 @@ package ru.job4j.bmb.services;
 
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class TelegramBotService implements BeanNameAware {
         System.out.println("Bean is going through init.");
     }
 
-    @PostConstruct
+    @PreDestroy
     public void destroy() {
         System.out.println("Bean will be destroyed now.");
     }
