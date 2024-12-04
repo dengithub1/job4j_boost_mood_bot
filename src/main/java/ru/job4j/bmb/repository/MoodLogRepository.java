@@ -1,9 +1,9 @@
 package ru.job4j.bmb.repository;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import ru.job4j.bmb.model.MoodLog;
 
-@Component
 @Repository
-public class MoodLogRepository {
+public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
 }

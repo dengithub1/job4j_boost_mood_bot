@@ -11,7 +11,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "client_id")
+    @Column(name = "client_id", unique = true)
     private long clientId;
 
     @Column(name = "chat_id")
