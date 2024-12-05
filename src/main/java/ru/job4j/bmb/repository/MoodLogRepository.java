@@ -6,4 +6,6 @@ import ru.job4j.bmb.model.MoodLog;
 
 @Repository
 public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
+    @Override
+    Iterable<MoodLog> findAll();
 }
