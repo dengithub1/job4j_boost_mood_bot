@@ -37,6 +37,18 @@ public class MoodLog {
         return createdAt;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
