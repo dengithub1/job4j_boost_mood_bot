@@ -1,6 +1,5 @@
 package ru.job4j.bmb.services;
 
-import org.hibernate.type.descriptor.sql.internal.Scale6IntervalSecondDdlType;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
