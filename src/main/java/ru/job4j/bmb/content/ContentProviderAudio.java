@@ -1,7 +1,6 @@
 package ru.job4j.bmb.content;
 
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import ru.job4j.bmb.model.Content;
 
 import java.io.File;
 

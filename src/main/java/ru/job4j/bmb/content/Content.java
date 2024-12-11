@@ -1,4 +1,4 @@
-package ru.job4j.bmb.model;
+package ru.job4j.bmb.content;
 
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;

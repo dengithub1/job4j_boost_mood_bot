@@ -1,7 +1,6 @@
 package ru.job4j.bmb.content;
 
 import org.springframework.stereotype.Component;
-import ru.job4j.bmb.model.Content;
 
 @Component
 public class ContentProviderText implements ContentProvider {

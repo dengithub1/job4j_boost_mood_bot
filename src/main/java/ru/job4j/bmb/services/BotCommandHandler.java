@@ -1,17 +1,58 @@
 package ru.job4j.bmb.services;
 
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.stereotype.Component;
+import org.hibernate.type.descriptor.sql.internal.Scale6IntervalSecondDdlType;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.model.User;
+import ru.job4j.bmb.repository.UserRepository;
 
-@Component
+import java.util.Optional;
+
 @Service
-public class BotCommandHandler implements BeanNameAware {
-    private String name;
+public class BotCommandHandler {
+    public final UserRepository userRepository;
+    public final MoodService moodService;
+    public final TgUI tgUI;
 
-    @Override
-    public void setBeanName(String name) {
-        this.name = name;
-        System.out.println(this.name);
+    public BotCommandHandler(UserRepository userRepository,
+                             MoodService moodService,
+                             TgUI tgUI) {
+        this.userRepository = userRepository;
+        this.moodService = moodService;
+        this.tgUI = tgUI;
+    }
+
+    Optional<Content> commands(Message message) {
+        String command = message.getText();
+        long chatId = message.getChatId();
+        long userId = message.getFrom().getId();
+        switch (command) {
+            case "/start" -> handleStartCommand(chatId, userId);
+            case "/week_mood_log" -> moodService.weekMoodLogCommand(chatId, chatId);
+            case "/month_mood_log" -> moodService.monthMoodLogCommand(chatId, chatId);
+            case "/award" -> moodService.awards(chatId, chatId);
+            default -> Optional.empty();
+        }
+
+        return Optional.empty();
+    }
+
+    Optional<Content> handleCallback(CallbackQuery callback) {
+        var moodId = Long.valueOf(callback.getData());
+        var user = userRepository.findByClientId(callback.getFrom().getId());
+        return user.map(v -> moodService.chooseMood(v, moodId));
+    }
+
+    Optional<Content> handleStartCommand(long chatId, Long clientId) {
+        var user = new User();
+        user.setChatId(chatId);
+        user.setClientId(clientId);
+        userRepository.save(user);
+        var content = new Content(chatId);
+        content.setText("Как настроение?");
+        content.setMarkup(tgUI.buildButtons());
+        return Optional.of(content);
     }
 }

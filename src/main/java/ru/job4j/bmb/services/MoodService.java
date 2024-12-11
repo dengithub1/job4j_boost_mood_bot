@@ -1,6 +1,7 @@
 package ru.job4j.bmb.services;
 
 import org.springframework.stereotype.Service;
+import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.*;
 import ru.job4j.bmb.repository.AchievementRepository;
 import ru.job4j.bmb.repository.MoodLogRepository;
