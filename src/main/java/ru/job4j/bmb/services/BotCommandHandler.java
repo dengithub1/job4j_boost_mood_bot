@@ -8,6 +8,7 @@ import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.UserRepository;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class BotCommandHandler {
@@ -56,7 +57,9 @@ public class BotCommandHandler {
         var user = new User();
         user.setChatId(chatId);
         user.setClientId(clientId);
-        userRepository.save(user);
+        if (userRepository.findByClientId(clientId).isEmpty()) {
+            userRepository.save(user);
+        }
         System.out.println(userRepository.findAll());
         var content = new Content(chatId);
         content.setText("Как настроение?");
