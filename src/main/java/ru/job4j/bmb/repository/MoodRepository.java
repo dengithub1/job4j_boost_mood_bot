@@ -7,5 +7,6 @@ import ru.job4j.bmb.model.User;
 import java.util.List;
 
 public interface MoodRepository extends CrudRepository<Mood, Long> {
+
     List<Mood> findAll();
 }
