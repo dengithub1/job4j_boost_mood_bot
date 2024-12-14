@@ -10,6 +10,7 @@ import ru.job4j.bmb.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +39,7 @@ public class MoodService {
         Mood mood = new Mood();
         mood.setId(moodId);
         MoodLog moodLog = new MoodLog();
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        long currentDateTimeFormat = Long.parseLong(currentDateTime.format(formatter));
+        long currentDateTimeFormat = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         moodLog.setMood(mood);
         moodLog.setUser(user);
         moodLog.setCreatedAt(currentDateTimeFormat);
@@ -48,8 +48,7 @@ public class MoodService {
     }
 
     public Optional<Content> weekMoodLogCommand(long chatId, Long clientId) {
-        LocalDateTime minus7Days = LocalDateTime.now().minusDays(7);
-        long minus7daysDate = Long.parseLong(minus7Days.format(formatter));
+        long minus7daysDate = LocalDateTime.now().minusDays(7).toEpochSecond(ZoneOffset.UTC);
         List<MoodLog> filteredLog = moodLogRepository.findAll().stream()
                 .filter(x -> x.getUser().getClientId() == clientId)
                 .filter(x -> x.getCreatedAt() == minus7daysDate)
@@ -60,8 +59,7 @@ public class MoodService {
     }
 
     public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
-        LocalDateTime minusMonth = LocalDateTime.now().minusWeeks(4);
-        long minusMonthDate = Long.parseLong(minusMonth.format(formatter));
+        long minusMonthDate = LocalDateTime.now().minusMonths(1).toEpochSecond(ZoneOffset.UTC);
         List<MoodLog> filteredLog = moodLogRepository.findAll().stream()
                 .filter(x -> x.getUser().getClientId() == clientId)
                 .filter(x -> x.getCreatedAt() == minusMonthDate)
