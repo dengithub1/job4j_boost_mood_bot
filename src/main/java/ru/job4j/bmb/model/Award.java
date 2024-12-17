@@ -15,6 +15,9 @@ public class Award {
     private String description;
     private int days;
 
+    public Award() {
+    }
+
     public Award(String title, String description, int days) {
         this.title = title;
         this.description = description;
@@ -65,5 +68,10 @@ public class Award {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, description, days);
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

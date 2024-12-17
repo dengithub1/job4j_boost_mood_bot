@@ -15,6 +15,11 @@ public class MoodLogFakeRepository extends CrudRepositoryFake<MoodLog, Long> imp
     }
 
     @Override
+    public List<MoodLog> findByUserId(Long userId) {
+        return List.of();
+    }
+
+    @Override
     public List<User> findUsersWhoDidNotVoteToday(long start, long end) {
         List<User> users = findAll().stream()
                 .map(MoodLog::getUser)

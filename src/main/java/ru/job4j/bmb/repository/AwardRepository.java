@@ -8,4 +8,6 @@ import java.util.List;
 public interface AwardRepository extends CrudRepository<Award, Long> {
     @Override
     List<Award> findAll();
+
+    List<Award> findAllByDaysLessThanEqual(int maxDays);
 }

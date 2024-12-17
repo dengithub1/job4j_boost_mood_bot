@@ -1,5 +1,6 @@
 package ru.job4j.bmb.services;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class MoodService {
+    private final ApplicationEventPublisher publisher;
     private final MoodLogRepository moodLogRepository;
     private final RecommendationEngine recommendationEngine;
     private final UserRepository userRepository;
@@ -25,10 +27,12 @@ public class MoodService {
             .ofPattern("dd-MM-yyyy HH:mm")
             .withZone(ZoneId.systemDefault());
 
-    public MoodService(MoodLogRepository moodLogRepository,
+    public MoodService(ApplicationEventPublisher publisher,
+                       MoodLogRepository moodLogRepository,
                        RecommendationEngine recommendationEngine,
                        UserRepository userRepository,
                        AchievementRepository achievementRepository) {
+        this.publisher = publisher;
         this.moodLogRepository = moodLogRepository;
         this.recommendationEngine = recommendationEngine;
         this.userRepository = userRepository;
@@ -44,6 +48,7 @@ public class MoodService {
         moodLog.setUser(user);
         moodLog.setCreatedAt(currentDateTimeFormat);
         moodLogRepository.save(moodLog);
+        publisher.publishEvent(new UserEvent(this, user));
         return recommendationEngine.recommendFor(user.getChatId(), moodId);
     }
 

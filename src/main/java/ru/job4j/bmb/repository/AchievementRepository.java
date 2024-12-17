@@ -10,4 +10,6 @@ import java.util.List;
 public interface AchievementRepository extends CrudRepository<Achievement, Long> {
     @Override
     List<Achievement> findAll();
+
+    List<Achievement> findAllByUserId(long userId);
 }

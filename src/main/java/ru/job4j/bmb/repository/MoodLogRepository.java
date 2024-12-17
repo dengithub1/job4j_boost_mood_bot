@@ -13,6 +13,8 @@ public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
     @Override
     List<MoodLog> findAll();
 
+    List<MoodLog> findByUserId(Long userId);
+
     default List<User> findUsersWhoDidNotVoteToday(long start, long end) {
         List<User> users = findAll().stream()
                 .map(MoodLog::getUser)
